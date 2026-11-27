@@ -16,7 +16,8 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, serviceKey);
 
     const url = new URL(req.url);
-    const days = parseInt(url.searchParams.get("days") || "30");
+    const parsedDays = parseInt(url.searchParams.get("days") || "30", 10);
+    const days = Number.isNaN(parsedDays) ? 30 : parsedDays;
     const sourceFilter = url.searchParams.get("source") || "all";
     const limitDays = Math.min(Math.max(days, 1), 90);
     const since = new Date(Date.now() - limitDays * 86400000).toISOString();

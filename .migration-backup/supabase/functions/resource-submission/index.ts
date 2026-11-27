@@ -10,6 +10,21 @@ const corsHeaders = {
 
 const RECIPIENT_EMAILS = ["saeb@fulbrightmail.org", "saeb.ahsan@gmail.com"];
 
+/** Escape HTML special chars: submitter-controlled text is placed in an HTML email to staff. */
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/** Collapse CR/LF so user text can never add lines to a header-like field. */
+function singleLine(str: string): string {
+  return str.replace(/[\r\n]+/g, " ");
+}
+
 const submissionSchema = z.object({
   organization_name: z.string().trim().min(1).max(200),
   contact_name: z.string().trim().min(1).max(100),
@@ -21,7 +36,7 @@ const submissionSchema = z.object({
   city: z.string().max(100).optional(),
   county: z.string().max(50).optional(),
   phone: z.string().max(20).optional(),
-  website: z.string().url().max(500).optional().or(z.literal("")),
+  website: z.string().url().max(500).refine((u) => /^https?:\/\//i.test(u), "Website must start with http:// or https://").optional().or(z.literal("")),
   is_free: z.boolean().default(false),
   walk_in_available: z.boolean().default(false),
   languages: z.array(z.string().max(50)).max(10).default(["English"]),
@@ -86,11 +101,11 @@ serve(async (req) => {
       try {
         const emailHtml = `
           <h2>New Resource Submission</h2>
-          <p><strong>Organization:</strong> ${data.organization_name}</p>
-          <p><strong>Contact:</strong> ${data.contact_name} (${data.contact_email})</p>
-          <p><strong>Type:</strong> ${data.resource_type}</p>
-          <p><strong>County:</strong> ${data.county || "Not specified"}</p>
-          <p><strong>Description:</strong> ${data.description}</p>
+          <p><strong>Organization:</strong> ${escapeHtml(data.organization_name)}</p>
+          <p><strong>Contact:</strong> ${escapeHtml(data.contact_name)} (${escapeHtml(data.contact_email)})</p>
+          <p><strong>Type:</strong> ${escapeHtml(data.resource_type)}</p>
+          <p><strong>County:</strong> ${escapeHtml(data.county || "Not specified")}</p>
+          <p><strong>Description:</strong> ${escapeHtml(data.description)}</p>
         `;
         await fetch("https://api.resend.com/emails", {
           method: "POST",
@@ -101,7 +116,7 @@ serve(async (req) => {
           body: JSON.stringify({
             from: "Access Michigan <onboarding@resend.dev>",
             to: RECIPIENT_EMAILS,
-            subject: `New Resource Submission: ${data.organization_name}`,
+            subject: `New Resource Submission: ${singleLine(data.organization_name)}`,
             html: emailHtml,
           }),
         });

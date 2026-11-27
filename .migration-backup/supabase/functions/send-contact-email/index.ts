@@ -76,7 +76,7 @@ Deno.serve(async (req) => {
         const emailBody = {
           from: "Access Michigan <onboarding@resend.dev>",
           to: RECIPIENT_EMAILS,
-                    subject: `Contact Form: ${safeSubject}`,
+          subject: `Contact Form: ${subject.replace(/[\r\n]+/g, " ")}`,
           html: `
             <h2>New Contact Message</h2>
             <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">

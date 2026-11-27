@@ -7,8 +7,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
  * Returns community resources in HSDS-compliant JSON format for 211/CIE interoperability.
  *
  * Query params:
- *   ?county=Wayne  — filter by county
- *   ?limit=50      — limit results (default 50)
+ *   ?county=Wayne  - filter by county
+ *   ?limit=50      - limit results (default 50)
  *
  * Open Referral HSDS: https://docs.openreferral.org/
  */
@@ -26,7 +26,8 @@ serve(async (req: Request) => {
   try {
     const url = new URL(req.url);
     const county = url.searchParams.get("county");
-    const limit = parseInt(url.searchParams.get("limit") || "50");
+    const parsedLimit = parseInt(url.searchParams.get("limit") || "50", 10);
+    const limit = Math.min(500, Math.max(1, Number.isNaN(parsedLimit) ? 50 : parsedLimit));
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
@@ -74,7 +75,8 @@ serve(async (req: Request) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: (err as Error).message }), {
+    console.error("hsds-export error:", err);
+    return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });

@@ -33,6 +33,9 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Dependency audit (non-blocking)
+        continue-on-error: true
+        run: pnpm audit --prod --audit-level=high
       - name: Typecheck
         working-directory: artifacts/access-mi
         run: pnpm typecheck

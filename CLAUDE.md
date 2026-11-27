@@ -63,6 +63,10 @@ is their only record. It is excluded from every other guard, so a routine
 dead-code sweep will happily delete it - one nearly did. `check-backend-
 functions.mjs` now fails the build if an endpoint the app calls has no source,
 and `backend-function-allowlist.json` records why each exception exists.
+Note: for appeal-generator and civic-copilot the backup holds the disabled LLM
+implementations; the deployable copies in `supabase/functions/` are 503
+kill-switch stubs, and redeploying from the backup re-enables unbounded LLM
+spend (the limiter is in-memory and keyed on X-Forwarded-For).
 
 ### No fabricated or unlabeled data
 Every rendered number needs a named source. Modeled/estimated values use the

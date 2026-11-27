@@ -73,6 +73,18 @@ function nrelAfdcToGeoJSON(data: any) {
 // In-memory cache with 1-hour TTL
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL = 60 * 60 * 1000;
+const CACHE_MAX_ENTRIES = 200;
+
+// Map preserves insertion order, so the first key is the oldest entry.
+function cacheSet(key: string, value: { data: unknown; ts: number }) {
+  cache.delete(key);
+  cache.set(key, value);
+  while (cache.size > CACHE_MAX_ENTRIES) {
+    const oldest = cache.keys().next().value;
+    if (oldest === undefined) break;
+    cache.delete(oldest);
+  }
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -120,7 +132,9 @@ Deno.serve(async (req) => {
       "developer.nlr.gov",
       "api.nlr.gov",
     ];
-    if (!trustedDomains.some((d) => parsed.hostname === d || parsed.hostname.endsWith("." + d))) {
+    const isTrustedHost = (hostname: string) =>
+      trustedDomains.some((d) => hostname === d || hostname.endsWith("." + d));
+    if (!isTrustedHost(parsed.hostname)) {
       return new Response(
         JSON.stringify({ error: "URL domain not in trusted list" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -137,8 +151,31 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Fetch upstream
-    const response = await fetch(targetUrl, { headers: { Accept: "application/json" } });
+    // Fetch upstream. Redirects are followed by hand so each hop is checked:
+    // an allowlisted host may redirect within the trusted list (ArcGIS does
+    // this between its own hosts) but must not bounce us anywhere else.
+    const MAX_REDIRECTS = 3;
+    let currentUrl = targetUrl;
+    let response = await fetch(currentUrl, { headers: { Accept: "application/json" }, redirect: "manual" });
+    for (let hop = 0; response.status >= 300 && response.status < 400; hop++) {
+      const location = response.headers.get("location");
+      await response.body?.cancel();
+      let next: URL | null = null;
+      try {
+        next = location ? new URL(location, currentUrl) : null;
+      } catch {
+        next = null;
+      }
+      if (hop >= MAX_REDIRECTS || !next || next.protocol !== "https:" || !isTrustedHost(next.hostname)) {
+        console.error(`Upstream redirect refused for ${layer || customUrl}: ${response.status}`);
+        return new Response(
+          JSON.stringify({ error: "Upstream redirect refused", layer: layer ?? null, fetched_at: new Date().toISOString() }),
+          { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      currentUrl = next.toString();
+      response = await fetch(currentUrl, { headers: { Accept: "application/json" }, redirect: "manual" });
+    }
 
     if (!response.ok) {
       console.error(`Upstream error for ${layer || customUrl}: ${response.status}`);
@@ -159,7 +196,7 @@ Deno.serve(async (req) => {
       data = nrelAfdcToGeoJSON(data);
     }
 
-    cache.set(cacheKey, { data, ts: Date.now() });
+    cacheSet(cacheKey, { data, ts: Date.now() });
 
     return new Response(
       JSON.stringify({ data, cached: false, fetched_at: new Date().toISOString() }),
