@@ -73,6 +73,18 @@ function nrelAfdcToGeoJSON(data: any) {
 // In-memory cache with 1-hour TTL
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL = 60 * 60 * 1000;
+const CACHE_MAX_ENTRIES = 200;
+
+// Map preserves insertion order, so the first key is the oldest entry.
+function cacheSet(key: string, value: { data: unknown; ts: number }) {
+  cache.delete(key);
+  cache.set(key, value);
+  while (cache.size > CACHE_MAX_ENTRIES) {
+    const oldest = cache.keys().next().value;
+    if (oldest === undefined) break;
+    cache.delete(oldest);
+  }
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -138,7 +150,19 @@ Deno.serve(async (req) => {
     }
 
     // Fetch upstream
-    const response = await fetch(targetUrl, { headers: { Accept: "application/json" } });
+    const response = await fetch(targetUrl, {
+      headers: { Accept: "application/json" },
+      // Never follow redirects: an allowlisted host must not bounce us elsewhere.
+      redirect: "manual",
+    });
+
+    if (response.status >= 300 && response.status < 400) {
+      console.error(`Upstream redirect refused for ${layer || customUrl}: ${response.status}`);
+      return new Response(
+        JSON.stringify({ error: "Upstream redirect refused", layer: layer ?? null, fetched_at: new Date().toISOString() }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     if (!response.ok) {
       console.error(`Upstream error for ${layer || customUrl}: ${response.status}`);
@@ -159,7 +183,7 @@ Deno.serve(async (req) => {
       data = nrelAfdcToGeoJSON(data);
     }
 
-    cache.set(cacheKey, { data, ts: Date.now() });
+    cacheSet(cacheKey, { data, ts: Date.now() });
 
     return new Response(
       JSON.stringify({ data, cached: false, fetched_at: new Date().toISOString() }),

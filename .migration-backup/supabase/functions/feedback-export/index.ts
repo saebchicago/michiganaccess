@@ -7,17 +7,40 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// Constant-time string comparison (avoids leaking the key via timing).
+function safeEqual(a: string, b: string): boolean {
+  const enc = new TextEncoder();
+  const x = enc.encode(a);
+  const y = enc.encode(b);
+  let diff = x.length ^ y.length;
+  const len = Math.max(x.length, y.length);
+  for (let i = 0; i < len; i++) diff |= (x[i] ?? 0) ^ (y[i] ?? 0);
+  return diff === 0;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Staff-only: this function reads page_feedback with the service-role key,
+  // which bypasses RLS, so it must authenticate callers itself. Same
+  // pattern as community-feedback-review.
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const authHeader = req.headers.get("Authorization");
+  if (!serviceRoleKey || !authHeader || !safeEqual(authHeader, `Bearer ${serviceRoleKey}`)) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseKey = serviceRoleKey;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Aggregate feedback by page — no personal data exposed
+    // Aggregate feedback by page - no personal data exposed
     const { data: feedback, error } = await supabase
       .from("page_feedback")
       .select("page_path, is_helpful, comment, created_at");
@@ -82,7 +105,7 @@ serve(async (req) => {
       overall_satisfaction_rate: (feedback || []).length > 0
         ? Math.round(((feedback || []).filter(f => f.is_helpful).length / (feedback || []).length) * 100)
         : 0,
-      note: "Anonymous aggregated feedback — no personal data collected. Suitable for CHNA reporting.",
+      note: "Anonymous aggregated feedback - no personal data collected. Suitable for CHNA reporting.",
       pages,
     };
 
