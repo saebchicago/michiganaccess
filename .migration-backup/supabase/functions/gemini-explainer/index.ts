@@ -15,7 +15,7 @@ serve(async (req) => {
   try {
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
     if (!GEMINI_API_KEY) {
-      return new Response(JSON.stringify({ error: "GEMINI_API_KEY not configured" }), {
+      return new Response(JSON.stringify({ error: "Service unavailable" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
@@ -34,7 +34,7 @@ serve(async (req) => {
     const safeGeo = (typeof geo === "string" ? geo.slice(0, 100) : "Michigan");
     const safeAudience = (typeof audience === "string" ? audience.slice(0, 50) : "resident");
 
-    const prompt = `You are a Michigan civic data expert. Explain the following topic for a ${safeAudience} audience in ${safeGeo}, Michigan. Be concise (under 250 words), accurate, and actionable. Do not fabricate statistics — use qualitative language if exact numbers are unavailable.\n\nTopic: ${safeTopic}`;
+    const prompt = `You are a Michigan civic data expert. Explain the following topic for a ${safeAudience} audience in ${safeGeo}, Michigan. Be concise (under 250 words), accurate, and actionable. Do not fabricate statistics - use qualitative language if exact numbers are unavailable.\n\nTopic: ${safeTopic}`;
 
     const geminiRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
@@ -86,7 +86,7 @@ serve(async (req) => {
   } catch (e) {
     console.error("gemini-explainer error:", e);
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: "Internal server error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

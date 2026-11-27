@@ -33,7 +33,7 @@ const SYSTEM_PROMPT = `You are Access Michigan Assistant, an AI helper for the A
 
 Key knowledge areas:
 - Michigan healthcare facilities (hospitals, FQHCs, urgent care, behavioral health)
-- Community resources (food banks, housing, legal aid, substance abuse) — 601+ resources across all 83 counties
+- Community resources (food banks, housing, legal aid, substance abuse) - 601+ resources across all 83 counties
 - Financial assistance programs (Medicaid, Healthy Michigan Plan, sliding-scale clinics)
 - Transportation options (public transit, medical transport, Safe Routes to School, MDOT programs)
 - School bus safety (stop-arm violations, school zone safety, student transportation programs)
@@ -83,7 +83,28 @@ serve(async (req) => {
     }
 
     // Trim to last 20 messages to keep context manageable
-    const trimmedMessages = messages.slice(-20);
+    // Only user/assistant turns with bounded string content: a caller must not
+    // be able to inject its own "system" turn or send unbounded prompt text.
+    const trimmedMessages = messages
+      .slice(-20)
+      .filter(
+        (m: unknown): m is { role: "user" | "assistant"; content: string } =>
+          !!m &&
+          typeof m === "object" &&
+          ((m as { role?: unknown }).role === "user" || (m as { role?: unknown }).role === "assistant") &&
+          typeof (m as { content?: unknown }).content === "string",
+      )
+      .map((m: { role: "user" | "assistant"; content: string }) => ({
+        role: m.role,
+        content: m.content.slice(0, 2000),
+      }));
+
+    if (trimmedMessages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Invalid messages format" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     const MISTRAL_API_KEY = Deno.env.get("MISTRAL_API_KEY") || Deno.env.get("VITE_MISTRAL_API_KEY");
     if (!MISTRAL_API_KEY) throw new Error("MISTRAL_API_KEY is not configured");
@@ -130,7 +151,7 @@ serve(async (req) => {
   } catch (e) {
     console.error("michigan-chat error:", e);
     return new Response(
-      JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }),
+      JSON.stringify({ error: "Internal server error" }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
